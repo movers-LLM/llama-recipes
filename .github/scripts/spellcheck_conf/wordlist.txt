@@ -1351,6 +1351,12 @@ Weaviate
 MediaGen
 SDXL
 SVD
+QLORA
+Agentic
+AutoGen
+DeepLearning
+Deeplearning
+Llamaindex
 KV
 KVs
 XSUM
@@ -1394,3 +1400,9 @@ sqlite
 customerservice
 fn
 ExecuTorch
+nf
+quant
+DLAI
+agentic
+containts
+dlai

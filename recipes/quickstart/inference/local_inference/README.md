@@ -46,7 +46,7 @@ Padding would be required for batch inference. In this this [example](inference.
 The inference folder also includes a chat completion example, that adds built-in safety features in fine-tuned models to the prompt tokens. To run the example:
 
 ```bash
-python chat_completion/chat_completion.py --model_name "PATH/TO/MODEL/7B/" --prompt_file chat_completion/chats.json  --quantization --use_auditnlg
+python chat_completion/chat_completion.py --model_name "PATH/TO/MODEL/7B/" --prompt_file chat_completion/chats.json  --quantization 8bit --use_auditnlg
 
 ```
 
@@ -55,7 +55,7 @@ python chat_completion/chat_completion.py --model_name "PATH/TO/MODEL/7B/" --pro
 Setting `use_fast_kernels` will enable using of Flash Attention or Xformer memory-efficient kernels based on the hardware being used. This would speed up inference when used for batched inputs. This has been enabled in `optimum` library from HuggingFace as a one-liner API, please read more [here](https://pytorch.org/blog/out-of-the-box-acceleration/).
 
 ```bash
-python chat_completion/chat_completion.py --model_name "PATH/TO/MODEL/7B/" --prompt_file chat_completion/chats.json  --quantization --use_auditnlg --use_fast_kernels
+python chat_completion/chat_completion.py --model_name "PATH/TO/MODEL/7B/" --prompt_file chat_completion/chats.json  --quantization 8bit --use_auditnlg --use_fast_kernels
 
 python inference.py --model_name <training_config.output_dir> --peft_model <training_config.output_dir> --prompt_file <test_prompt_file> --use_auditnlg --use_fast_kernels
 
@@ -69,7 +69,7 @@ In case you have fine-tuned your model with pure FSDP and saved the checkpoints 
 This is helpful if you have fine-tuned you model using FSDP only as follows:
 
 ```bash
-torchrun --nnodes 1 --nproc_per_node 8  recipes/quickstart/finetuning/finetuning.py --enable_fsdp --model_name /path_of_model_folder/7B --dist_checkpoint_root_folder model_checkpoints --dist_checkpoint_folder fine-tuned --pure_bf16
+torchrun --nnodes 1 --nproc_per_node 8  recipes/quickstart/finetuning/finetuning.py --enable_fsdp --model_name /path_of_model_folder/7B --dist_checkpoint_root_folder model_checkpoints --dist_checkpoint_folder fine-tuned --fsdp_config.pure_bf16
 ```
 Then convert your FSDP checkpoint to HuggingFace checkpoints using:
 ```bash
