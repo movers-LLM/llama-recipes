@@ -32,3 +32,9 @@ class custom_dataset:
     file: str = "recipes/quickstart/finetuning/datasets/custom_dataset.py"
     train_split: str = "train"
     test_split: str = "validation"
+
+@dataclass
+class aihub_translation_dataset:
+    dataset: str = "aihub_translation_dataset"
+    train_split: str = "train"
+    test_split: str = "test"

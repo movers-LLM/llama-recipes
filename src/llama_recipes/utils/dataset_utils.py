@@ -11,6 +11,7 @@ from llama_recipes.datasets import (
     get_grammar_dataset,
     get_alpaca_dataset,
     get_samsum_dataset,
+    get_aihub_translation_dataset,
 )
 
 
@@ -54,11 +55,13 @@ DATASET_PREPROC = {
     "grammar_dataset": get_grammar_dataset,
     "samsum_dataset": get_samsum_dataset,
     "custom_dataset": get_custom_dataset,
+
+    "aihub_translation_dataset": get_aihub_translation_dataset
 }
 
 
 def get_preprocessed_dataset(
-    tokenizer, dataset_config, split: str = "train"
+    tokenizer, dataset_config, split: str = "train", is_train_stage=True
 ) -> torch.utils.data.Dataset:
     if not dataset_config.dataset in DATASET_PREPROC:
         raise NotImplementedError(f"{dataset_config.dataset} is not (yet) implemented")
@@ -70,8 +73,17 @@ def get_preprocessed_dataset(
             else dataset_config.test_split
         )
 
-    return DATASET_PREPROC[dataset_config.dataset](
-        dataset_config,
-        tokenizer,
-        get_split(),
-    )
+    # is_train_stage kwarg is only defined in these datasets
+    if dataset_config.dataset in ['samsum_dataset', 'aihub_translation_dataset']:
+        return DATASET_PREPROC[dataset_config.dataset](
+            dataset_config,
+            tokenizer,
+            get_split(),
+            is_train_stage=is_train_stage
+        )
+    else:
+        return DATASET_PREPROC[dataset_config.dataset](
+            dataset_config,
+            tokenizer,
+            get_split(),
+        )

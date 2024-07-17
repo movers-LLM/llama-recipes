@@ -7,7 +7,7 @@ import copy
 import datasets
 
 
-def get_preprocessed_samsum(dataset_config, tokenizer, split):
+def get_preprocessed_samsum(dataset_config, tokenizer, split, is_train_stage=True):
     dataset = datasets.load_dataset("samsum", split=split)
 
     prompt = (
@@ -26,7 +26,7 @@ def get_preprocessed_samsum(dataset_config, tokenizer, split):
         prompt = tokenizer.encode(tokenizer.bos_token + sample["prompt"], add_special_tokens=False)
         summary = tokenizer.encode(sample["summary"] +  tokenizer.eos_token, add_special_tokens=False)
 
-        if split == 'train':
+        if is_train_stage:
             sample = {
                 "input_ids": prompt + summary,
                 "attention_mask" : [1] * (len(prompt) + len(summary)),
