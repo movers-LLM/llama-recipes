@@ -5,3 +5,7 @@ from llama_recipes.datasets.grammar_dataset.grammar_dataset import get_dataset a
 from llama_recipes.datasets.alpaca_dataset import InstructionDataset as get_alpaca_dataset
 from llama_recipes.datasets.samsum_dataset import get_preprocessed_samsum as get_samsum_dataset
 from llama_recipes.datasets.aihub_translation_dataset import get_preprocessed_aihub_translation as get_aihub_translation_dataset
+from llama_recipes.datasets.etri_qa_dataset import (
+    get_preprocessed_etri_qa_pair as get_etri_qa_pair_dataset,
+    get_preprocessed_etri_clm as get_etri_qa_clm_dataset,
+)

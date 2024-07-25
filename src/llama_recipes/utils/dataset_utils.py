@@ -11,7 +11,10 @@ from llama_recipes.datasets import (
     get_grammar_dataset,
     get_alpaca_dataset,
     get_samsum_dataset,
+
     get_aihub_translation_dataset,
+    get_etri_qa_pair_dataset,
+    get_etri_qa_clm_dataset,
 )
 
 
@@ -56,7 +59,9 @@ DATASET_PREPROC = {
     "samsum_dataset": get_samsum_dataset,
     "custom_dataset": get_custom_dataset,
 
-    "aihub_translation_dataset": get_aihub_translation_dataset
+    "aihub_translation_dataset": get_aihub_translation_dataset,
+    "etri_qa_pair_dataset": get_etri_qa_pair_dataset,
+    "etri_qa_clm_dataset": get_etri_qa_clm_dataset,
 }
 
 
