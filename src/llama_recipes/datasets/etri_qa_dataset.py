@@ -7,7 +7,10 @@ def get_preprocessed_etri_qa_pair(dataset_config, tokenizer, split, is_train_sta
 
     def apply_prompt_template(sample):
         return {
-            "prompt": prompt.format(question=(sample['question'] if split=='train' else sample['question_paraphrase'][0])),
+            "prompt": prompt.format(
+                question=(sample['question'] if split=='train' else sample['question_paraphrase'][0]),
+                context=sample['context']['content'],
+            ),
             "answer": sample['answer'],
         }
 
