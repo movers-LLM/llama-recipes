@@ -9,7 +9,7 @@ def get_preprocessed_etri_qa_pair(dataset_config, tokenizer, split, is_train_sta
         return {
             "prompt": prompt.format(
                 question=(sample['question'] if split=='train' else sample['question_paraphrase'][0]),
-                context=sample['context']['content'],
+                context=sample['context']['content'] if is_train_stage else "no context provided",
             ),
             "answer": sample['answer'],
         }
@@ -42,4 +42,23 @@ def get_preprocessed_etri_clm(dataset_config, tokenizer, split, is_train_stage=T
     raise NotImplementedError("get_preprocessed_etri_clm is not implemented yet.")
 
 if __name__ == '__main__':
-    pass
+    split = 'test'
+    is_train_stage = False
+    dataset = datasets.load_dataset("Movers-AI/etri-qa-nodup", split='train')
+
+    prompt = "Answer the question based on the context.\nQuestion:\n{question}\n---\nContext:\n{context}\n---\nAnswer:\n"
+
+    def apply_prompt_template(sample):
+        return {
+            "prompt": prompt.format(
+                question=(sample['question'] if split=='train' else sample['question_paraphrase'][0]),
+                context=sample['context']['content'] if is_train_stage else "no context provided",
+            ),
+            "answer": sample['answer'],
+        }
+
+    dataset = dataset.map(apply_prompt_template, remove_columns=list(dataset.features))
+    for key in dataset[0]:
+        print(f'[{key}]')
+        print(dataset[0][key])
+        print('-'*60)
